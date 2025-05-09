@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Project List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Project Name</th>
+                <th>Directory</th>
+            </tr>
+        </thead>
+        <tbody id="project-list">
+            <!-- Project rows will be injected here -->
+        </tbody>
+    </table>
+
+    <script>
+        // JSON object containing project details
+        const projects = [
+            { "name": "Project Alpha", "directory": "alpha" },
+            { "name": "Project Beta", "directory": "beta" },
+            { "name": "Project Gamma", "directory": "gamma" }
+        ];
+
+        // Reference to the table body
+        const projectList = document.getElementById('project-list');
+
+        // Populate the table with project data
+        projects.forEach(project => {
+            const row = document.createElement('tr');
+            row.innerHTML = `<td>${project.name}</td><td>${project.directory}</td>`;
+            projectList.appendChild(row);
+        });
+    </script>
+</body>
+</html>

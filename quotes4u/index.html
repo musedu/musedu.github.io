@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Press for a Surprise</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Playfair Display', serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f8f9fa, #e0e7ff);
+      color: #333;
+      text-align: center;
+    }
+
+    button {
+      background-color: #6c5ce7;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #5a4dbd;
+    }
+
+    .quote {
+      max-width: 80%;
+      margin-top: 40px;
+      font-size: 1.5em;
+      line-height: 1.4;
+      position: relative;
+      padding: 20px;
+      background: #ffffffcc;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .quote::before, .quote::after {
+      content: '“';
+      font-size: 2em;
+      position: absolute;
+      color: #aaa;
+    }
+
+    .quote::before {
+      top: -10px;
+      left: 10px;
+    }
+
+    .quote::after {
+      content: '”';
+      bottom: -10px;
+      right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <button id="surpriseBtn">Press for a surprise ✨</button>
+  <div class="quote" id="quoteDisplay"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    const quotes = [
+      "Believe you can and you're halfway there.",
+      "Your time is limited, so don’t waste it living someone else’s life.",
+      "The only way to do great work is to love what you do.",
+      "Success is not the key to happiness. Happiness is the key to success.",
+      "Hardships often prepare ordinary people for an extraordinary destiny.",
+      "Believe in yourself and all that you are.",
+      "Act as if what you do makes a difference. It does.",
+      "Keep your face always toward the sunshine—and shadows will fall behind you.",
+      "What lies behind us and what lies before us are tiny matters compared to what lies within us.",
+      "Do what you can, with what you have, where you are.",
+      "You are never too old to set another goal or to dream a new dream.",
+      "Everything you’ve ever wanted is on the other side of fear.",
+      "The only limit to our realization of tomorrow is our doubts of today.",
+      "Life is 10% what happens to us and 90% how we react to it.",
+      "Happiness is not something ready made. It comes from your own actions.",
+      "It always seems impossible until it’s done.",
+      "Start where you are. Use what you have. Do what you can.",
+      "The best way to predict the future is to create it.",
+      "Don't watch the clock; do what it does. Keep going.",
+      "In the middle of every difficulty lies opportunity.",
+      "Stay close to anything that makes you glad you are alive.",
+      "The more you praise and celebrate your life, the more there is in life to celebrate.",
+      "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+      "Don’t wait. The time will never be just right.",
+      "Dream big and dare to fail.",
+      "Courage doesn’t always roar. Sometimes courage is the quiet voice at the end of the day saying, ‘I will try again tomorrow.’",
+      "What you get by achieving your goals is not as important as what you become by achieving your goals.",
+      "Just when the caterpillar thought the world was over, it became a butterfly.",
+      "Aim for the moon. If you miss, you may hit a star.",
+      "Perseverance is not a long race; it is many short races one after the other.",
+      "Be yourself; everyone else is already taken.",
+      "Turn your wounds into wisdom.",
+      "You do not find the happy life. You make it.",
+      "Out of difficulties grow miracles.",
+      "The big lesson in life is never be scared of anyone or anything.",
+      "You are enough just as you are.",
+      "Make each day your masterpiece.",
+      "Try to be a rainbow in someone else’s cloud.",
+      "Live life to the fullest and focus on the positive.",
+      "Joy is not in things; it is in us."
+    ];
+
+    const button = document.getElementById('surpriseBtn');
+    const quoteDisplay = document.getElementById('quoteDisplay');
+
+    button.addEventListener('click', () => {
+      // Show confetti
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+
+      // Display random quote
+      const randomIndex = Math.floor(Math.random() * quotes.length);
+      quoteDisplay.textContent = quotes[randomIndex];
+    });
+  </script>
+</body>
+</html>

@@ -5,145 +5,125 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THANK YOU TINTAAA</title>
     <style>
-        /* 1. Animated Gradient Background */
-        body, html {
+        :root {
+            --glitch-speed: 0.1s;
+        }
+
+        body {
+            background: #000;
             margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
             overflow: hidden;
-            background: linear-gradient(-45deg, #6a11cb, #2575fc, #ff00cc, #333399);
-            background-size: 400% 400%;
-            animation: gradientBG 10s ease infinite;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Arial Black', Gadget, sans-serif;
+            height: 100vh;
+            font-family: 'Arial Black', sans-serif;
+            /* 1. Extreme Screen Shake */
+            animation: body-shake 0.2s infinite;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* 2. Glassmorphism Container */
-        .card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px 60px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            z-index: 10;
-            text-align: center;
-            pointer-events: none;
-        }
-
-        /* 3. Pulsing Floating Text */
-        h1 {
-            font-size: 4rem;
-            color: white;
-            margin: 0;
+        /* 2. RGB Split & High-Frequency Glitch Text */
+        .glitch-wrapper {
+            position: relative;
+            color: #fff;
+            font-size: 8vw;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
-            letter-spacing: 8px;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
-            animation: pulseFloat 3s ease-in-out infinite;
+            text-align: center;
         }
 
-        @keyframes pulseFloat {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-15px) scale(1.05); }
-        }
-
-        /* 4. Canvas for Particles */
-        canvas {
+        .glitch-wrapper::before,
+        .glitch-wrapper::after {
+            content: "THANK YOU TINTAAA";
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
         }
+
+        /* Red Split Layer */
+        .glitch-wrapper::before {
+            left: 5px;
+            text-shadow: -5px 0 #ff00c1;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim-1 2s infinite linear alternate-reverse;
+        }
+
+        /* Cyan Split Layer */
+        .glitch-wrapper::after {
+            left: -5px;
+            text-shadow: -5px 0 #00fff9;
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+
+        /* 3. Seizure-inducing Flash Background */
+        .flash-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.1);
+            pointer-events: none;
+            z-index: 100;
+            animation: strobe 0.05s infinite;
+        }
+
+        @keyframes body-shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            40% { transform: translate(1px, -1px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        @keyframes strobe {
+            0% { background: rgba(255,0,0,0.2); }
+            25% { background: rgba(0,255,0,0.2); }
+            50% { background: rgba(0,0,255,0.2); }
+            75% { background: rgba(255,255,0,0.2); }
+            100% { background: rgba(255,0,255,0.2); }
+        }
+
+        @keyframes glitch-anim-1 {
+            0% { clip: rect(20px, 9999px, 10px, 0); }
+            20% { clip: rect(85px, 9999px, 140px, 0); }
+            40% { clip: rect(10px, 9999px, 60px, 0); }
+            100% { clip: rect(130px, 9999px, 5px, 0); }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% { clip: rect(120px, 9999px, 50px, 0); }
+            25% { clip: rect(25px, 9999px, 80px, 0); }
+            75% { clip: rect(60px, 9999px, 150px, 0); }
+            100% { clip: rect(10px, 9999px, 10px, 0); }
+        }
     </style>
 </head>
 <body>
-
-    <canvas id="particleCanvas"></canvas>
-
-    <div class="card">
-        <h1>THANK YOU TINTAAA</h1>
-    </div>
+    <div class="flash-overlay"></div>
+    <div class="glitch-wrapper">THANK YOU TINTAAA</div>
 
     <script>
-        const canvas = document.getElementById('particleCanvas');
-        const ctx = canvas.getContext('2d');
-        let particlesArray = [];
+        // Chaotic Mouse Particles
+        document.addEventListener('mousemove', (e) => {
+            const particle = document.createElement('div');
+            particle.style.position = 'fixed';
+            particle.style.left = e.clientX + 'px';
+            particle.style.top = e.clientY + 'px';
+            particle.style.width = Math.random() * 50 + 'px';
+            particle.style.height = Math.random() * 50 + 'px';
+            particle.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            particle.style.pointerEvents = 'none';
+            particle.style.zIndex = '50';
+            particle.style.transform = `rotate(${Math.random() * 360}deg)`;
+            document.body.appendChild(particle);
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+            setTimeout(() => particle.remove(), 200);
         });
-
-        const mouse = { x: null, y: null };
-
-        // Generate particles on mouse move
-        window.addEventListener('mousemove', (event) => {
-            mouse.x = event.x;
-            mouse.y = event.y;
-            for (let i = 0; i < 3; i++) {
-                particlesArray.push(new Particle());
-            }
-        });
-
-        // Generate random floating particles automatically
-        setInterval(() => {
-            mouse.x = Math.random() * canvas.width;
-            mouse.y = Math.random() * canvas.height;
-            particlesArray.push(new Particle());
-        }, 100);
-
-        class Particle {
-            constructor() {
-                this.x = mouse.x;
-                this.y = mouse.y;
-                this.size = Math.random() * 8 + 1;
-                this.speedX = Math.random() * 2 - 1;
-                this.speedY = Math.random() * 2 - 1;
-                this.color = `rgba(255, 255, 255, ${Math.random()})`;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.size > 0.1) this.size -= 0.05;
-            }
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function handleParticles() {
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-                particlesArray[i].draw();
-                if (particlesArray[i].size <= 0.1) {
-                    particlesArray.splice(i, 1);
-                    i--;
-                }
-            }
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            handleParticles();
-            requestAnimationFrame(animate);
-        }
-        animate();
     </script>
 </body>
 </html>

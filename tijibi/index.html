@@ -3,127 +3,491 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THANK YOU TINTAAA</title>
+    <title>Studying Simulator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        :root {
-            --glitch-speed: 0.1s;
-        }
-
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        
         body {
-            background: #000;
-            margin: 0;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            font-family: 'Arial Black', sans-serif;
-            /* 1. Extreme Screen Shake */
-            animation: body-shake 0.2s infinite;
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            overflow: hidden; /* Prevent scrolling on mobile */
+            touch-action: manipulation; /* Improve touch response */
         }
 
-        /* 2. RGB Split & High-Frequency Glitch Text */
-        .glitch-wrapper {
-            position: relative;
-            color: #fff;
-            font-size: 8vw;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            text-align: center;
+        .click-animation {
+            animation: pop 0.1s ease-in-out;
         }
 
-        .glitch-wrapper::before,
-        .glitch-wrapper::after {
-            content: "THANK YOU TINTAAA";
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.95); }
+            100% { transform: scale(1); }
+        }
+
+        .float-text {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Red Split Layer */
-        .glitch-wrapper::before {
-            left: 5px;
-            text-shadow: -5px 0 #ff00c1;
-            clip: rect(44px, 450px, 56px, 0);
-            animation: glitch-anim-1 2s infinite linear alternate-reverse;
-        }
-
-        /* Cyan Split Layer */
-        .glitch-wrapper::after {
-            left: -5px;
-            text-shadow: -5px 0 #00fff9;
-            clip: rect(44px, 450px, 56px, 0);
-            animation: glitch-anim-2 3s infinite linear alternate-reverse;
-        }
-
-        /* 3. Seizure-inducing Flash Background */
-        .flash-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255,255,255,0.1);
             pointer-events: none;
-            z-index: 100;
-            animation: strobe 0.05s infinite;
+            animation: floatUp 1s ease-out forwards;
+            font-weight: bold;
+            color: #3b82f6;
+            z-index: 50;
         }
 
-        @keyframes body-shake {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            20% { transform: translate(-3px, 0px) rotate(1deg); }
-            40% { transform: translate(1px, -1px) rotate(-1deg); }
-            60% { transform: translate(-3px, 1px) rotate(0deg); }
-            80% { transform: translate(-1px, -1px) rotate(1deg); }
-            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-50px) scale(1.2); }
         }
 
-        @keyframes strobe {
-            0% { background: rgba(255,0,0,0.2); }
-            25% { background: rgba(0,255,0,0.2); }
-            50% { background: rgba(0,0,255,0.2); }
-            75% { background: rgba(255,255,0,0.2); }
-            100% { background: rgba(255,0,255,0.2); }
+        /* Custom Scrollbar for the shop */
+        .shop-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .shop-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .shop-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .shop-scroll::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
 
-        @keyframes glitch-anim-1 {
-            0% { clip: rect(20px, 9999px, 10px, 0); }
-            20% { clip: rect(85px, 9999px, 140px, 0); }
-            40% { clip: rect(10px, 9999px, 60px, 0); }
-            100% { clip: rect(130px, 9999px, 5px, 0); }
-        }
-
-        @keyframes glitch-anim-2 {
-            0% { clip: rect(120px, 9999px, 50px, 0); }
-            25% { clip: rect(25px, 9999px, 80px, 0); }
-            75% { clip: rect(60px, 9999px, 150px, 0); }
-            100% { clip: rect(10px, 9999px, 10px, 0); }
+        .bg-pattern {
+            background-color: #ffffff;
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 20px 20px;
         }
     </style>
 </head>
-<body>
-    <div class="flash-overlay"></div>
-    <div class="glitch-wrapper">THANK YOU TINTAAA</div>
+<body class="h-screen w-screen flex flex-col md:flex-row bg-pattern text-slate-800">
+
+    <!-- LEFT PANEL: The Desk (Interaction) -->
+    <div class="w-full md:w-5/12 h-1/2 md:h-full flex flex-col p-6 relative border-b-2 md:border-b-0 md:border-r-2 border-slate-200 bg-white/80 backdrop-blur-sm z-10">
+        
+        <!-- Header / Stats -->
+        <div class="flex justify-between items-start mb-6">
+            <div>
+                <h1 class="text-2xl font-black text-slate-800 tracking-tight"><i class="fas fa-graduation-cap text-blue-600 mr-2"></i>Studying Sim</h1>
+                <p class="text-slate-500 text-sm">Grade: <span id="grade-display" class="font-bold text-blue-600">F</span> (GPA: <span id="gpa-display">0.0</span>)</p>
+            </div>
+            <div class="text-right">
+                <div class="text-xs text-slate-400 uppercase font-bold tracking-wider">Knowledge</div>
+                <div class="text-3xl font-black text-slate-800" id="kp-display">0</div>
+                <div class="text-sm text-green-600 font-semibold">+<span id="kp-per-sec">0</span> KP/sec</div>
+            </div>
+        </div>
+
+        <!-- Central Click Area -->
+        <div class="flex-grow flex items-center justify-center relative">
+            <button id="study-btn" class="group relative w-48 h-56 bg-white border-4 border-slate-200 rounded-xl shadow-[0_10px_0_rgb(203,213,225)] active:shadow-none active:translate-y-[10px] transition-all duration-100 flex flex-col items-center justify-center overflow-hidden hover:border-blue-400">
+                <!-- Book Spine Effect -->
+                <div class="absolute left-2 top-0 bottom-0 w-1 bg-slate-100"></div>
+                
+                <!-- Icon -->
+                <div class="text-6xl mb-4 group-hover:scale-110 transition-transform duration-200">
+                    📚
+                </div>
+                <span class="font-bold text-slate-700 text-lg">STUDY</span>
+                <span class="text-xs text-slate-400 mt-1">Click to learn</span>
+            </button>
+        </div>
+
+        <!-- Status Bar -->
+        <div class="mt-4 bg-slate-100 rounded-lg p-3 border border-slate-200">
+            <div class="flex justify-between text-xs font-bold text-slate-500 mb-1">
+                <span>PROGRESS TO NEXT GRADE</span>
+                <span id="progress-text">0%</span>
+            </div>
+            <div class="w-full bg-slate-200 rounded-full h-2.5">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <button id="exam-btn" class="w-full mt-3 bg-slate-800 text-white py-2 rounded font-bold text-sm opacity-50 cursor-not-allowed transition-all hover:bg-slate-700 hidden">
+                TAKE EXAM (Level Up)
+            </button>
+        </div>
+    </div>
+
+    <!-- RIGHT PANEL: The Store -->
+    <div class="w-full md:w-7/12 h-1/2 md:h-full flex flex-col bg-slate-50 relative">
+        <div class="p-4 bg-white border-b border-slate-200 shadow-sm z-20 flex justify-between items-center">
+            <h2 class="font-bold text-lg text-slate-700">Student Store</h2>
+            <div class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded font-mono">
+                Multiplier: x<span id="multiplier-display">1.0</span>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex border-b border-slate-200 bg-white">
+            <button class="flex-1 py-3 text-sm font-bold text-blue-600 border-b-2 border-blue-600 bg-blue-50">Supplies & Upgrades</button>
+            <!-- Placeholder for future tabs -->
+        </div>
+
+        <!-- Shop Items List -->
+        <div id="shop-list" class="flex-1 overflow-y-auto p-4 space-y-3 shop-scroll pb-20">
+            <!-- Items injected by JS -->
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast-container" class="fixed bottom-4 right-4 z-50 pointer-events-none flex flex-col gap-2"></div>
 
     <script>
-        // Chaotic Mouse Particles
-        document.addEventListener('mousemove', (e) => {
-            const particle = document.createElement('div');
-            particle.style.position = 'fixed';
-            particle.style.left = e.clientX + 'px';
-            particle.style.top = e.clientY + 'px';
-            particle.style.width = Math.random() * 50 + 'px';
-            particle.style.height = Math.random() * 50 + 'px';
-            particle.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
-            particle.style.pointerEvents = 'none';
-            particle.style.zIndex = '50';
-            particle.style.transform = `rotate(${Math.random() * 360}deg)`;
-            document.body.appendChild(particle);
+        // --- Game Config & State ---
+        const Game = {
+            kp: 0,
+            totalKp: 0, // Lifetime KP
+            gradeLevel: 0,
+            gpa: 0.0,
+            lastSave: Date.now(),
+            
+            // Grades configuration
+            grades: [
+                { name: "F", req: 100 },
+                { name: "D-", req: 500 },
+                { name: "D", req: 1200 },
+                { name: "C-", req: 2500 },
+                { name: "C", req: 5000 },
+                { name: "B-", req: 10000 },
+                { name: "B", req: 25000 },
+                { name: "A-", req: 50000 },
+                { name: "A", req: 100000 },
+                { name: "A+", req: 250000 },
+                { name: "PhD", req: 1000000 }
+            ],
 
-            setTimeout(() => particle.remove(), 200);
+            // Item definitions
+            items: [
+                {
+                    id: 'pencil',
+                    name: 'Mechanical Pencil',
+                    icon: '✏️',
+                    baseCost: 15,
+                    basePower: 1,
+                    type: 'click',
+                    desc: 'Sharper than your wit. +1 KP/click.',
+                    count: 0
+                },
+                {
+                    id: 'lofi',
+                    name: 'Lo-Fi Radio',
+                    icon: '🎧',
+                    baseCost: 50,
+                    basePower: 1,
+                    type: 'auto',
+                    desc: 'Beats to study to. +1 KP/sec.',
+                    count: 0
+                },
+                {
+                    id: 'coffee',
+                    name: 'Espresso Shot',
+                    icon: '☕',
+                    baseCost: 150,
+                    basePower: 5,
+                    type: 'click',
+                    desc: 'Liquid focus. +5 KP/click.',
+                    count: 0
+                },
+                {
+                    id: 'flashcards',
+                    name: 'Flashcards',
+                    icon: '🗂️',
+                    baseCost: 300,
+                    basePower: 3,
+                    type: 'auto',
+                    desc: 'Rote memorization works. +3 KP/sec.',
+                    count: 0
+                },
+                {
+                    id: 'highlight',
+                    name: 'Neon Highlighter',
+                    icon: '🖍️',
+                    baseCost: 1000,
+                    basePower: 15,
+                    type: 'click',
+                    desc: 'Make everything yellow. +15 KP/click.',
+                    count: 0
+                },
+                {
+                    id: 'tutor',
+                    name: 'Private Tutor',
+                    icon: '🤓',
+                    baseCost: 2500,
+                    basePower: 10,
+                    type: 'auto',
+                    desc: 'They actually read the book. +10 KP/sec.',
+                    count: 0
+                },
+                {
+                    id: 'laptop',
+                    name: 'New Laptop',
+                    icon: '💻',
+                    baseCost: 10000,
+                    basePower: 50,
+                    type: 'click',
+                    desc: 'Faster typing, faster learning. +50 KP/click.',
+                    count: 0
+                },
+                {
+                    id: 'group',
+                    name: 'Study Group',
+                    icon: '👥',
+                    baseCost: 25000,
+                    basePower: 45,
+                    type: 'auto',
+                    desc: 'Divide and conquer. +45 KP/sec.',
+                    count: 0
+                },
+                {
+                    id: 'library',
+                    name: 'Library Pass',
+                    icon: '🏛️',
+                    baseCost: 100000,
+                    basePower: 150,
+                    type: 'auto',
+                    desc: 'Silence is golden. +150 KP/sec.',
+                    count: 0
+                }
+            ]
+        };
+
+        // --- Derived Stats ---
+        function getClickPower() {
+            let base = 1;
+            Game.items.forEach(item => {
+                if (item.type === 'click') {
+                    base += item.count * item.basePower;
+                }
+            });
+            return Math.floor(base * (1 + Game.gpa)); // GPA acts as global multiplier
+        }
+
+        function getAutoPower() {
+            let base = 0;
+            Game.items.forEach(item => {
+                if (item.type === 'auto') {
+                    base += item.count * item.basePower;
+                }
+            });
+            return Math.floor(base * (1 + Game.gpa));
+        }
+
+        function getItemCost(item) {
+            return Math.floor(item.baseCost * Math.pow(1.15, item.count));
+        }
+
+        // --- Core Logic ---
+        
+        function addKP(amount, x, y, isClick = false) {
+            Game.kp += amount;
+            Game.totalKp += amount;
+            updateUI();
+            
+            if (isClick && x && y) {
+                spawnFloatingText(amount, x, y);
+            }
+            checkExamStatus();
+        }
+
+        function spawnFloatingText(amount, x, y) {
+            const el = document.createElement('div');
+            el.className = 'float-text';
+            el.textContent = `+${amount}`;
+            el.style.left = `${x}px`;
+            el.style.top = `${y}px`;
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 1000);
+        }
+
+        function buyItem(index) {
+            const item = Game.items[index];
+            const cost = getItemCost(item);
+            
+            if (Game.kp >= cost) {
+                Game.kp -= cost;
+                item.count++;
+                
+                // Audio feedback (very subtle beep)
+                // const audio = new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU...'); // Placeholder for simplicity
+                
+                updateShopUI();
+                updateUI();
+                showToast(`Bought ${item.name}!`);
+            }
+        }
+
+        function checkExamStatus() {
+            const currentGrade = Game.grades[Game.gradeLevel];
+            const btn = document.getElementById('exam-btn');
+            
+            // If max level
+            if (!currentGrade) {
+                document.getElementById('progress-text').innerText = "MAX LEVEL";
+                document.getElementById('progress-bar').style.width = "100%";
+                btn.classList.add('hidden');
+                return;
+            }
+
+            const req = currentGrade.req;
+            const progress = Math.min((Game.totalKp / req) * 100, 100);
+            
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            document.getElementById('progress-text').innerText = `${Math.floor(progress)}%`;
+
+            if (Game.totalKp >= req) {
+                btn.classList.remove('hidden', 'opacity-50', 'cursor-not-allowed');
+                btn.classList.add('cursor-pointer', 'animate-pulse');
+                btn.disabled = false;
+                btn.innerText = `TAKE EXAM FOR GRADE ${currentGrade.name}`;
+            } else {
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+                btn.classList.remove('hidden', 'cursor-pointer', 'animate-pulse');
+                btn.disabled = true;
+                btn.innerText = `NEXT GRADE AT ${formatNumber(req)} TOTAL KP`;
+            }
+        }
+
+        function takeExam() {
+            const nextGrade = Game.grades[Game.gradeLevel];
+            if (!nextGrade || Game.totalKp < nextGrade.req) return;
+
+            // Reset Logic
+            Game.gradeLevel++;
+            Game.kp = 0;
+            Game.totalKp = 0;
+            Game.gpa += 0.5; // Massive boost per grade
+            
+            // Keep items but maybe reset counts? For this simple version, let's keep items but reset KP.
+            // Actually, standard prestige resets buildings. Let's reset items for balancing.
+            Game.items.forEach(i => i.count = 0);
+
+            showToast(`Passed Exam! Grade is now ${nextGrade.name}. GPA +0.5!`);
+            
+            // Visual flair
+            const confetti = document.createElement('div');
+            confetti.className = 'fixed inset-0 pointer-events-none z-50 flex items-center justify-center text-6xl font-black text-blue-600 bg-white/50 backdrop-blur';
+            confetti.innerText = `GRADE ${nextGrade.name} ACHIEVED!`;
+            document.body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 2000);
+
+            updateUI();
+            updateShopUI();
+            checkExamStatus();
+        }
+
+        function showToast(msg) {
+            const container = document.getElementById('toast-container');
+            const el = document.createElement('div');
+            el.className = 'bg-slate-800 text-white px-4 py-2 rounded shadow-lg text-sm animate-fade-in-up';
+            el.textContent = msg;
+            container.appendChild(el);
+            setTimeout(() => {
+                el.style.opacity = '0';
+                setTimeout(() => el.remove(), 300);
+            }, 2000);
+        }
+
+        // --- Formatting ---
+        function formatNumber(num) {
+            if (num >= 1000000) return (num / 1000000).toFixed(2) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
+            return Math.floor(num);
+        }
+
+        // --- Render Functions ---
+        function updateUI() {
+            document.getElementById('kp-display').innerText = formatNumber(Game.kp);
+            document.getElementById('kp-per-sec').innerText = formatNumber(getAutoPower());
+            document.getElementById('grade-display').innerText = Game.gradeLevel > 0 ? Game.grades[Game.gradeLevel-1].name : 'None';
+            document.getElementById('gpa-display').innerText = Game.gpa.toFixed(1);
+            document.getElementById('multiplier-display').innerText = (1 + Game.gpa).toFixed(1);
+            
+            // Check button affordability
+            Game.items.forEach((item, index) => {
+                const btn = document.getElementById(`buy-btn-${index}`);
+                if (btn) {
+                    const cost = getItemCost(item);
+                    if (Game.kp >= cost) {
+                        btn.classList.remove('opacity-50', 'grayscale');
+                        btn.classList.add('hover:bg-blue-50');
+                    } else {
+                        btn.classList.add('opacity-50', 'grayscale');
+                        btn.classList.remove('hover:bg-blue-50');
+                    }
+                }
+            });
+        }
+
+        function updateShopUI() {
+            const container = document.getElementById('shop-list');
+            container.innerHTML = '';
+
+            Game.items.forEach((item, index) => {
+                const cost = getItemCost(item);
+                const el = document.createElement('div');
+                el.className = `flex items-center p-3 bg-white border border-slate-200 rounded-lg shadow-sm transition-all select-none group`;
+                
+                el.innerHTML = `
+                    <div class="text-3xl mr-3 bg-slate-50 w-12 h-12 flex items-center justify-center rounded-full border border-slate-100 group-hover:scale-110 transition-transform">
+                        ${item.icon}
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-bold text-slate-700">${item.name} <span class="text-xs text-slate-400 font-normal ml-1">Lvl ${item.count}</span></h3>
+                            <span class="font-bold text-blue-600 text-sm">${formatNumber(cost)} KP</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mb-1">${item.desc}</p>
+                        <div class="text-xs font-mono text-slate-400 uppercase tracking-wide">${item.type === 'click' ? 'Click Power' : 'Auto Study'}</div>
+                    </div>
+                    <button id="buy-btn-${index}" class="ml-3 px-3 py-1 bg-white border border-slate-200 hover:border-blue-400 hover:text-blue-600 rounded text-slate-500 transition-colors" onclick="buyItem(${index})">
+                        Buy
+                    </button>
+                `;
+                container.appendChild(el);
+            });
+        }
+
+        // --- Initialization ---
+        
+        // Setup Event Listeners
+        const studyBtn = document.getElementById('study-btn');
+        studyBtn.addEventListener('mousedown', (e) => {
+            const amt = getClickPower();
+            addKP(amt, e.clientX, e.clientY, true);
         });
+
+        // Touch support for mobile
+        studyBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Prevent double firing
+            const touch = e.touches[0];
+            const amt = getClickPower();
+            addKP(amt, touch.clientX, touch.clientY, true);
+            
+            // Visual feedback
+            studyBtn.classList.add('scale-95');
+            setTimeout(() => studyBtn.classList.remove('scale-95'), 100);
+        });
+
+        document.getElementById('exam-btn').addEventListener('click', takeExam);
+
+        // Game Loop
+        setInterval(() => {
+            const auto = getAutoPower();
+            if (auto > 0) {
+                addKP(auto / 10); // Run at 10 ticks per second for smoothness
+            }
+        }, 100);
+
+        // Initial Render
+        updateShopUI();
+        updateUI();
+        checkExamStatus();
+
+        // Welcome Toast
+        setTimeout(() => showToast("Welcome to class! Start clicking to study."), 500);
+
     </script>
 </body>
 </html>
